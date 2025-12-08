@@ -1,5 +1,5 @@
 {
-  "name": "VibeID - Identity Validation",
-  "description": "A multimodal identity validation system that analyzes ID documents or faces, simulates database checks, and generates a structured profile report.",
+  "name": "Vibe IVS-ID - Identity Validation System (PoC)",
+  "description": "A multimodal identity validation system that analyzes faces, simulates database checks, and generates a structured profile report.",
   "requestFramePermissions": []
 }

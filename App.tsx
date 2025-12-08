@@ -4,6 +4,7 @@ import { analyzeIdentity } from './services/geminiService';
 import { AnalysisState } from './types';
 import ProfileCard from './components/ProfileCard';
 import JsonView from './components/JsonView';
+import AppDescription from './components/AppDescription';
 import { translations, Language } from './services/i18n';
 
 function App() {
@@ -81,20 +82,30 @@ function App() {
           </div>
           
           <div className="flex items-center gap-4">
-             {/* Language Selector */}
-            <select
-              value={lang}
-              onChange={(e) => setLang(e.target.value as Language)}
-              className="bg-slate-800 border border-slate-700 text-slate-300 text-xs rounded px-2 py-1 outline-none focus:border-brand-500 cursor-pointer"
-            >
-              <option value="en">English</option>
-              <option value="pt">Português</option>
-              <option value="es">Español</option>
-              <option value="fr">Français</option>
-            </select>
+             {/* Language Selector Component */}
+            <div className="flex items-center gap-2 bg-slate-800 rounded-lg px-2 py-1.5 border border-slate-700/50 focus-within:border-brand-500/50 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <select
+                value={lang}
+                onChange={(e) => setLang(e.target.value as Language)}
+                className="bg-transparent text-slate-300 text-xs font-medium outline-none cursor-pointer appearance-none hover:text-white"
+              >
+                <option value="en" className="bg-slate-800">English</option>
+                <option value="pt" className="bg-slate-800">Português</option>
+                <option value="es" className="bg-slate-800">Español</option>
+                <option value="fr" className="bg-slate-800">Français</option>
+              </select>
+            </div>
 
-            <div className="text-xs font-mono text-slate-500 hidden md:block">
-               {t.systemStatus} <span className="text-brand-400">{t.online}</span>
+            <div className="text-xs font-mono text-slate-500 hidden md:flex items-center gap-2 border-l border-slate-800 pl-4">
+               <span>{t.systemStatus}</span>
+               <span className="flex h-2 w-2 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+               </span>
+               <span className="text-brand-400 font-bold">{t.online}</span>
             </div>
           </div>
         </div>
@@ -103,13 +114,15 @@ function App() {
       <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-10 space-y-12">
         
         {/* Intro */}
-        <section className="text-center space-y-4 max-w-2xl mx-auto">
+        <section className="text-center space-y-6 max-w-3xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-500">
             {t.heroTitle}
           </h2>
           <p className="text-slate-400 text-lg">
             {t.heroDesc}
           </p>
+
+          <AppDescription lang={lang} />
         </section>
 
         {/* Input Area */}
@@ -178,6 +191,19 @@ function App() {
                 </div>
               </label>
 
+              {/* Disclaimer PoC moved here */}
+               <div className="text-[10px] text-slate-500 leading-relaxed bg-slate-950/30 p-3 rounded border border-slate-800/50">
+                  {t.disclaimer_poc}{' '}
+                  <a 
+                    href="https://github.com/axlrn/Google-DeepMind-Vibe-Code-Gemini-3-Pro-AI-Studio/tree/main/images"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-brand-500/80 hover:text-brand-400 underline decoration-brand-500/30 transition-colors ml-1"
+                  >
+                    GitHub Dataset
+                  </a>
+               </div>
+
               <button
                 onClick={handleProcess}
                 disabled={!file || state.isLoading}
@@ -238,7 +264,7 @@ function App() {
 
       {/* Footer */}
       <footer className="border-t border-slate-900 bg-slate-950 py-8 text-center text-slate-600 text-sm">
-        <p>{t.footer}</p>
+        <p className="mb-4">{t.footer}</p>
       </footer>
 
       {/* Animation Styles */}

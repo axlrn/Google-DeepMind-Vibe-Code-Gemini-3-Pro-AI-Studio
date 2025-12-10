@@ -37,10 +37,19 @@ export const translations = {
     summary: "Summary",
     errorLabel: "Error",
     noImg: "No Img",
-    // Values
-    status_regular: "Regular",
-    val_unknown: "Unknown",
-    val_na: "N/A"
+    // JSON Toggle
+    viewJson: "View Technical Details (Raw JSON)",
+    hideJson: "Hide Technical Details",
+    jsonSystemOutput: "System Output.json",
+    // Values & Keys
+    val_na: "N/A",
+    FISCAL_REGULAR: "Regular",
+    FISCAL_UNKNOWN: "Not Available",
+    OCCUPATION_CEO: "Technology Executive / CEO",
+    OCCUPATION_SCIENTIST: "Scientist / Researcher",
+    OCCUPATION_ARTIST: "Artist / Performer",
+    OCCUPATION_ENGINEER: "Software Engineer",
+    OCCUPATION_UNKNOWN: "Unknown Occupation"
   },
   pt: {
     appTitle: "VibeID",
@@ -77,10 +86,19 @@ export const translations = {
     summary: "Resumo",
     errorLabel: "Erro",
     noImg: "Sem img",
-    // Values
-    status_regular: "Regular",
-    val_unknown: "Desconhecida",
-    val_na: "N/A"
+    // JSON Toggle
+    viewJson: "Visualizar Detalhes Técnicos (JSON Bruto)",
+    hideJson: "Ocultar Detalhes Técnicos",
+    jsonSystemOutput: "Saída do Sistema.json",
+    // Values & Keys
+    val_na: "N/A",
+    FISCAL_REGULAR: "Regular",
+    FISCAL_UNKNOWN: "Não Disponível",
+    OCCUPATION_CEO: "Executivo de Tecnologia / CEO",
+    OCCUPATION_SCIENTIST: "Cientista / Pesquisador",
+    OCCUPATION_ARTIST: "Artista / Performer",
+    OCCUPATION_ENGINEER: "Engenheiro de Software",
+    OCCUPATION_UNKNOWN: "Ocupação Desconhecida"
   },
   es: {
     appTitle: "VibeID",
@@ -117,10 +135,19 @@ export const translations = {
     summary: "Resumen",
     errorLabel: "Error",
     noImg: "Sin img",
-    // Values
-    status_regular: "Regular",
-    val_unknown: "Desconocida",
-    val_na: "N/A"
+    // JSON Toggle
+    viewJson: "Ver Detalles Técnicos (JSON Crudo)",
+    hideJson: "Ocultar Detalles Técnicos",
+    jsonSystemOutput: "Salida del Sistema.json",
+    // Values & Keys
+    val_na: "N/A",
+    FISCAL_REGULAR: "Regular",
+    FISCAL_UNKNOWN: "No Disponible",
+    OCCUPATION_CEO: "Ejecutivo de Tecnología / CEO",
+    OCCUPATION_SCIENTIST: "Científico / Investigador",
+    OCCUPATION_ARTIST: "Artista / Intérprete",
+    OCCUPATION_ENGINEER: "Ingeniero de Software",
+    OCCUPATION_UNKNOWN: "Ocupación Desconocida"
   },
   fr: {
     appTitle: "VibeID",
@@ -128,7 +155,7 @@ export const translations = {
     online: "EN LIGNE",
     heroTitle: "Système de Validation d'Identité (Preuve de Concept)",
     heroDesc: "Téléchargez une photo de visage pour générer une analyse de profil complète vérifiée par l'IA.",
-    mission_statement: "Le but de cette Preuve de Concept est de démontrer la viabilité technique de la construction d'un système unifiant l'identité physique et l'identité numérique d'un individu. L'application simule la récupération de données en consultant des profils publics sur internet (identité numérique) et des API gouvernementales du pays d'origine identifié (identité physique).",
+    mission_statement: "Le but de cette Preuve de Concept est de démontrer la viabilité technique de la construction d'un système unifiant l'identité physique et l'identité numérique d'un individu. L'application simula la récupération de données en consultant des profils publics sur internet (identité numérique) et des API gouvernementales du pays d'origine identifié (identité physique).",
     project_parallel: "Ce projet s'inspire d'initiatives telles que SmartSampa (São Paulo), qui intègre des caméras de sécurité avec la biométrie faciale pour l'identification dans la Sécurité Publique.",
     context_and_goal_title: "CONTEXTE ET BUT TECHNIQUE",
     uploadClick: "Cliquez pour télécharger",
@@ -157,9 +184,18 @@ export const translations = {
     summary: "Résumé",
     errorLabel: "Erreur",
     noImg: "Pas d'img",
-    // Values
-    status_regular: "Régulier",
-    val_unknown: "Inconnue",
-    val_na: "N/A"
+    // JSON Toggle
+    viewJson: "Voir les détails techniques (JSON Brut)",
+    hideJson: "Masquer les détails techniques",
+    jsonSystemOutput: "Sortie Système.json",
+    // Values & Keys
+    val_na: "N/A",
+    FISCAL_REGULAR: "Régulier",
+    FISCAL_UNKNOWN: "Non disponible",
+    OCCUPATION_CEO: "Cadre technologique / PDG",
+    OCCUPATION_SCIENTIST: "Scientifique / Chercheur",
+    OCCUPATION_ARTIST: "Artiste / Interprète",
+    OCCUPATION_ENGINEER: "Ingénieur logiciel",
+    OCCUPATION_UNKNOWN: "Occupation inconnue"
   }
 };

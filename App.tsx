@@ -3,7 +3,6 @@ import React, { useState, useRef } from 'react';
 import { analyzeIdentity } from './services/geminiService';
 import { AnalysisState } from './types';
 import ProfileCard from './components/ProfileCard';
-import JsonView from './components/JsonView';
 import AppDescription from './components/AppDescription';
 import { translations, Language } from './services/i18n';
 
@@ -254,7 +253,7 @@ function App() {
             {state.result && (
               <div className="animate-fade-in-up space-y-6">
                 <ProfileCard data={state.result} imagePreview={imagePreview} lang={lang} />
-                <JsonView data={state.result} />
+                {/* JSON View Removed per request */}
               </div>
             )}
           </div>

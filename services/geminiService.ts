@@ -23,8 +23,8 @@ FORMATO DE SAÍDA JSON OBRIGATÓRIO:
   "reasoning_explanation": "String (Max 2 frases)",
   "resumo_perfil": "String",
   "info_checagem_simulada": {
-    "ocupacao": "String",
-    "status_fiscal": "REGULAR" | "N/A",
+    "ocupacao": "String (USE CHAVES: OCCUPATION_CEO, OCCUPATION_SCIENTIST, OCCUPATION_ARTIST, OCCUPATION_ENGINEER, OCCUPATION_UNKNOWN)",
+    "status_fiscal": "FISCAL_REGULAR" | "FISCAL_UNKNOWN",
     "score_social_simulado": Number
   },
   "tabela_fontes": [ 
@@ -39,13 +39,6 @@ FORMATO DE SAÍDA JSON OBRIGATÓRIO:
 }
 `;
 
-const langMap: Record<Language, string> = {
-  en: "English",
-  pt: "Portuguese",
-  es: "Spanish",
-  fr: "French"
-};
-
 /**
  * Main function to analyze identity using Gemini.
  */
@@ -53,11 +46,10 @@ export async function analyzeIdentity(
   base64Image: string,
   mimeType: string,
   consent: boolean,
-  lang: Language = 'en'
+  selectedLang: Language = 'en'
 ): Promise<VibeIDResponse> {
   
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  const targetLanguage = langMap[lang];
 
   const imagePart = {
     inlineData: {
@@ -88,18 +80,28 @@ export async function analyzeIdentity(
 
     1. É SAM ALTMAN? (Homem + Pele Clara + Idade Adulta + Fig. Pública Tech)?
        -> SIM: Selecione registro com visual_tag: "FAMOUS_SAM_ALTMAN".
+       -> Ocupação: "OCCUPATION_CEO"
+       -> Status Fiscal: "FISCAL_REGULAR"
 
     2. É ANITTA? (Mulher + Latina + Cabelo Longo + Artista)?
        -> SIM: Selecione registro com visual_tag: "FAMOUS_ANITTA".
+       -> Ocupação: "OCCUPATION_ARTIST"
+       -> Status Fiscal: "FISCAL_REGULAR"
 
     3. É YANN LECUN? (Homem + Grisalho + Óculos + Cientista)?
        -> SIM: Selecione registro com visual_tag: "FAMOUS_YANN_LECUN".
+       -> Ocupação: "OCCUPATION_SCIENTIST"
+       -> Status Fiscal: "FISCAL_REGULAR"
 
     4. É SUZANA HERCULANO? (Mulher + Madura + Cientista)?
        -> SIM: Selecione registro com visual_tag: "FAMOUS_SUZANA_HERCULANO".
+       -> Ocupação: "OCCUPATION_SCIENTIST"
+       -> Status Fiscal: "FISCAL_REGULAR"
 
     5. É RENAN (USUÁRIO PADRÃO)? (Homem + Aparência Latina/Brasileira + Cabelo Escuro)?
        -> SIM: Selecione registro com visual_tag: "ANONYMOUS_MALE_LATINO".
+       -> Ocupação: "OCCUPATION_ENGINEER"
+       -> Status Fiscal: "FISCAL_REGULAR"
 
     SE NENHUMA DAS 5 REGRAS FOR ATENDIDA (Ex: Foto de objeto, animal ou pessoa muito diferente):
        -> Retorne FALHA.
@@ -112,9 +114,13 @@ export async function analyzeIdentity(
     1. IDENTIDADE VALIDADA:
        Preencha 'validated_name', 'validated_country', 'validated_email', 'final_confidence_score' com os dados do REGISTRO VENCEDOR (Bucket selecionado acima).
     
-    2. TABELA DE FONTES (AUDITORIA COMPLETA):
-       O campo 'tabela_fontes' do JSON final DEVE conter TODOS os registros do Mock DB (os 5 perfis: Renan, Sam, Anitta, Suzana, Yann) que foram fornecidos como entrada, SEM FILTROS.
-       O objetivo é que o frontend mostre a lista completa de perfis processados para auditoria.
+    2. TABELA DE FONTES (FILTRADA PELO VENCEDOR):
+       O campo 'tabela_fontes' do JSON final DEVE conter SOMENTE os registros do Mock DB (de Renan, Sam, Anitta, Suzana ou Yann) que correspondem ao validated_name escolhido.
+       
+       PASSO A PASSO:
+       A. Identifique qual visual_tag venceu (ex: FAMOUS_ANITTA).
+       B. FILTRE a lista de entrada do Mock DB e inclua em 'tabela_fontes' APENAS o registro correspondente (mesmo ID ou visual_tag).
+       
        Mapeie os campos do Mock DB para o JSON de saída:
        - platform -> plataforma
        - email -> email_encontrado
@@ -122,8 +128,12 @@ export async function analyzeIdentity(
        - url -> url_perfil
        - match_score -> grau_correspondencia
 
-    3. TRADUÇÃO:
-       Os campos 'reasoning_explanation' e 'resumo_perfil' DEVEM estar em **${targetLanguage}**.
+    3. STATUS E OCUPAÇÃO (Use APENAS as chaves abaixo):
+       - ocupacao: OCCUPATION_CEO, OCCUPATION_SCIENTIST, OCCUPATION_ARTIST, OCCUPATION_ENGINEER, ou OCCUPATION_UNKNOWN.
+       - status_fiscal: FISCAL_REGULAR ou FISCAL_UNKNOWN.
+
+    4. TRADUÇÃO E IDIOMA:
+       Gere os campos reasoning_explanation e resumo_perfil EXCLUSIVAMENTE NO IDIOMA representado pelo código ${selectedLang}. Por exemplo, se o código for fr, todo o texto deve estar em francês.
        'reasoning_explanation': Explique qual regra de bucket foi ativada. MÁXIMO 2 FRASES.
   `;
 
@@ -160,9 +170,9 @@ export async function analyzeIdentity(
           domicilio_fiscal: parsed.validated_country || parsed.domicilio_fiscal || null,
           
           info_checagem_simulada: {
-              ocupacao: parsed.info_checagem_simulada?.ocupacao || "Desconhecida",
+              ocupacao: parsed.info_checagem_simulada?.ocupacao || "OCCUPATION_UNKNOWN",
               ultimo_post_simulado: parsed.info_checagem_simulada?.ultimo_post_simulado || "N/A",
-              status_fiscal: parsed.info_checagem_simulada?.status_fiscal || "N/A",
+              status_fiscal: parsed.info_checagem_simulada?.status_fiscal || "FISCAL_UNKNOWN",
               score_social_simulado: parsed.info_checagem_simulada?.score_social_simulado || 0
           },
           tabela_fontes: parsed.tabela_fontes || [],

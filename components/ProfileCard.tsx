@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { VibeIDResponse } from '../types';
 import { translations, Language } from '../services/i18n';
 
@@ -38,6 +38,7 @@ const translateCountry = (country: string | null | undefined, lang: Language): s
 };
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ data, imagePreview, lang }) => {
+  const [showJson, setShowJson] = useState(false);
   const t = translations[lang];
   const isSuccess = data.status_validacao === 'SUCESSO';
   const isPending = data.status_validacao === 'PENDENTE_CONSENTIMENTO';
@@ -62,21 +63,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ data, imagePreview, lang }) =
   if (score > 80) progressColor = 'text-brand-500';
   else if (score > 60) progressColor = 'text-yellow-500';
 
-  // Helper to translate values (Status/Occupation)
-  const getTranslatedValue = (type: 'status' | 'occupation', value: string | undefined | null) => {
-    if (!value || value === 'N/A') return t.val_na;
-    
-    if (type === 'status') {
-      if (value.toUpperCase() === 'REGULAR') return t.status_regular;
-      return value;
-    }
-    
-    if (type === 'occupation') {
-      if (value === 'Desconhecida' || value === 'Unknown') return t.val_unknown;
-      return value;
-    }
-    
-    return value;
+  // Helper to translate values using keys from i18n
+  const getTranslatedKey = (key: string | undefined | null) => {
+    if (!key || key === 'N/A') return t.val_na;
+    // @ts-ignore - Dynamic key access on translation object
+    return t[key] || key;
   };
 
   return (
@@ -195,21 +186,29 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ data, imagePreview, lang }) =
           <div className="grid grid-cols-2 gap-4 text-sm">
              <div className="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
                <p className="text-slate-500 text-xs uppercase mb-1">{t.statFiscal}</p>
-               <span className={`text-xs font-bold ${data.info_checagem_simulada?.status_fiscal === 'REGULAR' ? 'text-green-400' : 'text-yellow-400'}`}>
-                  {getTranslatedValue('status', data.info_checagem_simulada?.status_fiscal)}
+               <span className={`text-xs font-bold ${data.info_checagem_simulada?.status_fiscal === 'FISCAL_REGULAR' ? 'text-green-400' : 'text-yellow-400'}`}>
+                  {getTranslatedKey(data.info_checagem_simulada?.status_fiscal)}
                </span>
              </div>
              <div className="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
                <p className="text-slate-500 text-xs uppercase mb-1">{t.statOccupation}</p>
                <span className="text-slate-200 text-xs truncate block">
-                 {getTranslatedValue('occupation', data.info_checagem_simulada?.ocupacao)}
+                 {getTranslatedKey(data.info_checagem_simulada?.ocupacao)}
                </span>
              </div>
           </div>
 
-          <div className="bg-slate-700/30 p-4 rounded-lg border-l-4 border-slate-600 italic text-slate-400 text-sm">
-            <span className="not-italic font-bold text-slate-500 block mb-1 text-xs uppercase">{t.summary}:</span>
-            "{data.resumo_perfil}"
+          {/* Enhanced Summary Section - Main Focus */}
+          <div className="bg-slate-800 p-4 rounded-lg border border-slate-700 shadow-sm">
+            <h4 className="text-brand-400 text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              {t.summary}
+            </h4>
+            <p className="text-slate-300 text-sm leading-relaxed">
+              {data.resumo_perfil}
+            </p>
           </div>
           
           {data.razao_falha && (
@@ -274,6 +273,27 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ data, imagePreview, lang }) =
           </div>
         </div>
       )}
+
+      {/* JSON Toggle Section */}
+      <div className="mt-8 flex flex-col items-center gap-4 animate-fade-in-up">
+         <button 
+           onClick={() => setShowJson(!showJson)}
+           className="text-xs font-mono text-slate-500 hover:text-brand-400 underline decoration-slate-700 hover:decoration-brand-500/50 transition-colors focus:outline-none"
+         >
+           {showJson ? t.hideJson : t.viewJson}
+         </button>
+
+         {showJson && (
+            <div className="w-full bg-slate-950 rounded-lg p-4 border border-slate-800 font-mono text-[10px] md:text-xs overflow-x-auto shadow-inner text-left transition-all duration-300">
+               <div className="text-slate-500 font-bold mb-2 uppercase tracking-widest text-[10px] border-b border-slate-800 pb-2">
+                 {t.jsonSystemOutput}
+               </div>
+               <pre className="text-emerald-400 leading-relaxed whitespace-pre-wrap break-all">
+                  {JSON.stringify(data, null, 2)}
+               </pre>
+            </div>
+         )}
+      </div>
     </div>
   );
 };

@@ -3,6 +3,7 @@ export type Language = 'en' | 'pt' | 'es' | 'fr';
 
 export const translations = {
   en: {
+    select_language_label: "Select preferred language:",
     appTitle: "VibeID",
     systemStatus: "System Status:",
     online: "ONLINE",
@@ -22,7 +23,7 @@ export const translations = {
     waitingTitle: "Waiting for input...",
     waitingDesc: "Results will appear here after image processing.",
     footer: "VibeID System © 2024. Powered by Gemini 2.5 Flash.",
-    disclaimer_poc: "Proof of Concept Notice: This application was trained and tested with 5 public images (available on GitHub) to demonstrate the feasibility of cross-referencing public data using facial biometrics.",
+    poc_usage_instruction: "⚠️ WARNING (PROOF OF CONCEPT): For correct operation and to demonstrate AI reasoning, please use only the 5 test images available in our [GitHub Dataset]. While it is possible to upload other photos, the likely result will be an error, as the application was trained only with this small simulated dataset.",
     // Profile Card
     valIdentity: "Validated Identity (AI Decision)",
     confScore: "Confidence Score",
@@ -52,6 +53,7 @@ export const translations = {
     OCCUPATION_UNKNOWN: "Unknown Occupation"
   },
   pt: {
+    select_language_label: "Selecione o idioma preferido:",
     appTitle: "VibeID",
     systemStatus: "Status do Sistema:",
     online: "ONLINE",
@@ -71,7 +73,7 @@ export const translations = {
     waitingTitle: "Aguardando entrada...",
     waitingDesc: "Os resultados aparecerão aqui após o processamento da imagem.",
     footer: "Sistema VibeID © 2024. Desenvolvido com Gemini 2.5 Flash.",
-    disclaimer_poc: "Aviso PoC: Esta aplicação foi treinada e testada com 5 imagens públicas (disponíveis no GitHub) para comprovar a viabilidade de busca de dados a partir de biometria facial em perfis públicos.",
+    poc_usage_instruction: "⚠️ ATENÇÃO (PROVA DE CONCEITO): Para o funcionamento correto e demonstração do raciocínio da IA, utilize somente as 5 imagens de teste disponíveis no nosso [GitHub Dataset]. Embora seja possível carregar outras fotos, o resultado provável será de erro, pois a aplicação foi treinada apenas com esse pequeno conjunto de dados simulado.",
     // Profile Card
     valIdentity: "Identidade Validada (Decisão IA)",
     confScore: "Pontuação de Confiança",
@@ -101,6 +103,7 @@ export const translations = {
     OCCUPATION_UNKNOWN: "Ocupação Desconhecida"
   },
   es: {
+    select_language_label: "Seleccione el idioma preferido:",
     appTitle: "VibeID",
     systemStatus: "Estado del Sistema:",
     online: "EN LÍNEA",
@@ -120,7 +123,7 @@ export const translations = {
     waitingTitle: "Esperando entrada...",
     waitingDesc: "Los resultados aparecerán aquí después del procesamiento de la imagen.",
     footer: "Sistema VibeID © 2024. Impulsado por Gemini 2.5 Flash.",
-    disclaimer_poc: "Aviso de PoC: Esta aplicación fue entrenada y probada con 5 imágenes públicas (disponibles en GitHub) para demostrar la viabilidad de cruzar datos públicos utilizando biometría facial.",
+    poc_usage_instruction: "⚠️ ATENCIÓN (PRUEBA DE CONCEPTO): Para el correcto funcionamiento y demostración del razonamiento de la IA, utilice únicamente las 5 imágenes de prueba disponibles en nuestro [GitHub Dataset]. Aunque es posible subir otras fotos, el resultado probable será un error, ya que la aplicación fue entrenada solo con este pequeño conjunto de datos simulado.",
     // Profile Card
     valIdentity: "Identidad Validada (Decisión IA)",
     confScore: "Puntaje de Confianza",
@@ -150,6 +153,7 @@ export const translations = {
     OCCUPATION_UNKNOWN: "Ocupación Desconocida"
   },
   fr: {
+    select_language_label: "Sélectionnez la langue préférée:",
     appTitle: "VibeID",
     systemStatus: "État du Système :",
     online: "EN LIGNE",
@@ -169,7 +173,7 @@ export const translations = {
     waitingTitle: "En attente d'entrée...",
     waitingDesc: "Les résultats apparaîtront ici après le traitement de l'image.",
     footer: "Système VibeID © 2024. Propulsé par Gemini 2.5 Flash.",
-    disclaimer_poc: "Avis de PoC : Cette application a été entraînée et testée avec 5 images publiques (disponibles sur GitHub) pour démontrer la faisabilité du croisement de données publiques à l'aide de la biométrie faciale.",
+    poc_usage_instruction: "⚠️ ATTENTION (PREUVE DE CONCEPT) : Pour un fonctionnement correct et pour démontrer le raisonnement de l'IA, veuillez utiliser uniquement les 5 images de test disponibles dans notre [GitHub Dataset]. Bien qu'il soit possible de télécharger d'autres photos, le résultat probable sera une erreur, car l'application n'a été entraînée qu'avec ce petit jeu de données simulé.",
     // Profile Card
     valIdentity: "Identité Validée (Décision IA)",
     confScore: "Score de Confiance",
